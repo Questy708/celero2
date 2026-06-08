@@ -34,12 +34,12 @@ import {
 import type { RouteLeg, KeyCity, MapLocation } from "@/artemis/data/routes";
 
 /* ══════════════════════════════════════════════════════════════════════════
-   ROUTES BRIDGE: Image strip + two-column routes thesis with dotted map
+   ROUTES BRIDGE: Cinematic hero + stat strip + editorial text/map layout
    ══════════════════════════════════════════════════════════════════════════ */
 
 const routesBridgeImages = [
   {
-    src: "https://images.unsplash.com/photo-1611348524140-53c9a25263d6?auto=format&fit=crop&w=800&q=80",
+    src: "https://images.unsplash.com/photo-1611348524140-53c9a25263d6?auto=format&fit=crop&w=1600&q=80",
     alt: "Nairobi skyline",
   },
   {
@@ -50,6 +50,13 @@ const routesBridgeImages = [
     src: "https://images.unsplash.com/photo-1669127300649-940337f1487e?auto=format&fit=crop&w=800&q=80",
     alt: "African city development",
   },
+];
+
+const bridgeStats = [
+  { value: "190", label: "Hubs" },
+  { value: "39", label: "Countries" },
+  { value: "6", label: "Route Legs" },
+  { value: "1", label: "Year Circuit" },
 ];
 
 /* Dot-matrix world map for Routes page */
@@ -97,82 +104,129 @@ const routesWorldDots = (() => {
 
 function RoutesBridge() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="px-6 md:px-12 lg:px-20 pb-16 md:pb-24 border-b border-[#111111]/10">
-      <div className="w-full max-w-[1400px] mx-auto">
-        {/* Image strip: three overlapping images */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="relative flex items-end justify-start gap-0 mb-16 md:mb-24"
-        >
-          {routesBridgeImages.map((img, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.1 + i * 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className={`relative overflow-hidden bg-[#F5F5F5] shadow-lg ${
-                i === 0
-                  ? "w-[36%] md:w-[32%] aspect-[4/3] z-10"
-                  : i === 1
-                  ? "w-[44%] md:w-[40%] aspect-[4/3] z-30 -mt-3 -ml-[8%] md:-ml-[4%]"
-                  : "w-[36%] md:w-[32%] aspect-[4/3] z-10 -ml-[8%] md:-ml-[4%]"
-              }`}
-            >
-              <img
-                src={img.src}
-                alt={img.alt}
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
-              />
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Two-column layout: text left, dotted map right */}
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Left: Routes thesis text */}
+    <section ref={ref} className="border-b border-[#111111]/10">
+      {/* ── Cinematic hero image ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : {}}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        className="relative w-full h-[55vh] md:h-[68vh] overflow-hidden"
+      >
+        <img
+          src={routesBridgeImages[0].src}
+          alt={routesBridgeImages[0].alt}
+          className="w-full h-full object-cover grayscale"
+        />
+        {/* gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/80 via-[#111111]/20 to-transparent" />
+        {/* overlaid label + title */}
+        <div className="absolute bottom-0 left-0 right-0 px-6 md:px-12 lg:px-20 pb-10 md:pb-14">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-6"
           >
-            <p className="text-[22px] sm:text-[28px] md:text-[34px] leading-[1.25] font-display font-medium tracking-[-0.02em] text-[#111111] mb-6 md:mb-8">
-              The world doesn&apos;t operate in borders. It operates in <span className="text-[#FF4D00]">flow</span>.
-            </p>
-            <p className="text-[15px] md:text-[17px] leading-[1.7] text-[#111111]/60 font-medium max-w-xl">
-              The Hanseatic League connected 190 cities through shared covenants for trade, law, and mutual defense. It lasted 300 years and made its member cities the wealthiest in Europe, not through conquest, but through flow. The Ba-Hanse is not a copy of that League. It is a new union, inspired by it, for a different continent, a different philosophy, a different century. Where Próspera designs for wealth creation, where Praxis pursues heroism, truth, and beauty, xCelero advances human progress toward the next epoch of civilization. 190 hubs, 39 countries, one circulatory system where prosperity is designed to flow. <span className="text-[#111111] font-semibold">Where flow connects, mutual flourishing follows.</span>
-            </p>
+            <span className="text-[10px] font-mono font-bold tracking-[0.3em] uppercase text-[#FF4D00] mb-3 block">
+              Ba-Hanse Network
+            </span>
+            <h2 className="text-[42px] sm:text-[60px] md:text-[76px] lg:text-[92px] font-display font-medium leading-none tracking-[-0.03em] text-white">
+              The world operates<br />
+              in <span className="italic text-[#FF4D00]">flow</span>.
+            </h2>
+          </motion.div>
+        </div>
+      </motion.div>
+
+      {/* ── Stat strip ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="grid grid-cols-2 md:grid-cols-4 border-b border-[#111111]/10"
+      >
+        {bridgeStats.map((stat, i) => (
+          <div
+            key={stat.label}
+            className={`px-6 md:px-10 lg:px-14 py-7 md:py-9 flex flex-col gap-1 ${
+              i < bridgeStats.length - 1 ? "border-r border-[#111111]/10" : ""
+            }`}
+          >
+            <span className="text-[36px] md:text-[44px] font-display font-medium tracking-[-0.03em] text-[#111111] leading-none">
+              {stat.value}
+            </span>
+            <span className="text-[10px] font-mono font-bold tracking-[0.22em] uppercase text-[#111111]/40">
+              {stat.label}
+            </span>
+          </div>
+        ))}
+      </motion.div>
+
+      {/* ── Editorial text + dotted map ── */}
+      <div className="px-6 md:px-12 lg:px-20 py-16 md:py-24">
+        <div className="w-full max-w-[1400px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+          {/* Left: two stacked images */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-4 flex flex-col gap-3"
+          >
+            <div className="aspect-[4/3] overflow-hidden bg-[#F5F5F5]">
+              <img
+                src={routesBridgeImages[1].src}
+                alt={routesBridgeImages[1].alt}
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+              />
+            </div>
+            <div className="aspect-[4/3] overflow-hidden bg-[#F5F5F5]">
+              <img
+                src={routesBridgeImages[2].src}
+                alt={routesBridgeImages[2].alt}
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+              />
+            </div>
           </motion.div>
 
-          {/* Right: Dotted world map */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-6 flex items-center justify-center"
-          >
-            <div className="relative w-full max-w-lg">
+          {/* Right: thesis + dotted map */}
+          <div className="lg:col-span-8 flex flex-col gap-12 lg:gap-16">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <p className="text-[19px] md:text-[23px] lg:text-[27px] leading-[1.35] font-display font-medium tracking-[-0.02em] text-[#111111] mb-6 md:mb-8 max-w-2xl">
+                The Hanseatic League connected 190 cities through shared covenants for trade, law, and mutual defense. It lasted 300 years and made its member cities the wealthiest in Europe — not through conquest, but through <span className="text-[#FF4D00]">flow</span>.
+              </p>
+              <p className="text-[14px] md:text-[16px] leading-[1.75] text-[#111111]/55 font-medium max-w-xl">
+                The Ba-Hanse is not a copy of that League. It is a new union, inspired by it, for a different continent, a different philosophy, a different century. 190 hubs, 39 countries, one circulatory system where prosperity is designed to flow.{" "}
+                <span className="text-[#111111] font-semibold">Where flow connects, mutual flourishing follows.</span>
+              </p>
+            </motion.div>
+
+            {/* Dotted map — full width of the right column */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
+              className="relative w-full"
+            >
               <svg
                 viewBox="0 0 60 30"
                 className="w-full h-auto"
                 style={{ imageRendering: "auto" }}
               >
-                {/* All land dots in dark color */}
                 {routesWorldDots.map((dot, i) => (
                   <circle
                     key={i}
                     cx={dot.col * 1}
                     cy={dot.row * 1}
                     r="0.35"
-                    className="fill-[#111111]/70"
+                    className="fill-[#111111]/20"
                   />
                 ))}
-                {/* Africa highlighted region: cols 23-33, rows 3-21 */}
                 {routesWorldDots
                   .filter(
                     (d) =>
@@ -183,17 +237,21 @@ function RoutesBridge() {
                       key={`af-${i}`}
                       cx={dot.col * 1}
                       cy={dot.row * 1}
-                      r="0.4"
+                      r="0.42"
                       className="fill-[#FF4D00]"
                     />
                   ))}
               </svg>
-              {/* Label */}
-              <div className="absolute bottom-2 right-4 text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-[#FF4D00]">
-                6 Legs · 190 Hubs
+              <div className="mt-3 flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold tracking-[0.22em] uppercase text-[#111111]/30">
+                  Ba-Hanse Circuit — 39 Countries
+                </span>
+                <span className="text-[10px] font-mono font-bold tracking-[0.22em] uppercase text-[#FF4D00]">
+                  6 Legs · 190 Hubs
+                </span>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -207,94 +265,118 @@ function RoutesBridge() {
    ══════════════════════════════════════════════════════════════════════════ */
 function BaHanseFormatSection() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
 
-  const formatCards = [
+  const formatItems = [
     {
+      number: "01",
       icon: Route,
       title: "Flow Immersions",
       description:
-        "Deep-dive cohort experiences in each hub city. Not observation, participation. You enter the flow of goods, capital, data, and people, and you shape it from inside.",
+        "Deep-dive cohort experiences in each hub city. Not observation — participation. You enter the flow of goods, capital, data, and people, and you shape it from inside.",
     },
     {
+      number: "02",
       icon: Database,
       title: "Covenant Sprints",
       description:
-        "Intensive cohort sessions where the group convenes conversations with operators, regulators, and builders to design the arrangements the Route needs. Cross-border value flows, shared infrastructure, identity systems — co-designed with the people who will live inside them.",
+        "Intensive sessions where the cohort convenes operators, regulators, and builders to design the arrangements the Route needs. Cross-border value flows, shared infrastructure, identity systems — co-designed with the people who will live inside them.",
     },
     {
+      number: "03",
       icon: Users,
       title: "Commons Feasts",
       description:
         "Every leg culminates in a shared meal that is also a shared deliberation. Jollof cook-offs in Lagos, tea ceremonies in Agadez, dhow dinners in Mombasa. Food as treaty. Table as parliament.",
     },
     {
+      number: "04",
       icon: Compass,
       title: "Heritage Walks",
       description:
-        "Guided walks through sites of memory and consequence. Not tourism, witnessing. From slave castles to manuscript libraries, each walk places the Route in the long arc of human exchange.",
+        "Guided walks through sites of memory and consequence. Not tourism — witnessing. From slave castles to manuscript libraries, each walk places the Route in the long arc of human exchange.",
     },
   ];
 
   return (
-    <section
-      ref={ref}
-      className="py-20 md:py-28 px-6 md:px-12 lg:px-20 border-b border-[#111111]/10 bg-white"
-    >
-      <div className="w-full max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {/* Label */}
-          <span className="text-[10px] font-mono font-bold tracking-[0.25em] uppercase text-[#FF4D00] mb-4 block">
-            The Format
-          </span>
-
-          {/* Title */}
-          <h2 className="text-[24px] sm:text-[30px] md:text-[36px] lg:text-[42px] leading-[1.15] font-display font-medium tracking-[-0.02em] text-[#111111] mb-12 md:mb-16 max-w-3xl">
-            Not a tour. Not a conference. A mobile university for civilizational prototyping.
-          </h2>
-
-          {/* Format cards grid */}
-          <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
-            {formatCards.map((card, i) => (
-              <motion.div
-                key={card.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 + i * 0.1, ease: "easeOut" }}
-                className="border border-[#111111]/10 p-6 md:p-8 hover:border-[#111111]/20 transition-colors"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 shrink-0 flex items-center justify-center bg-[#FF4D00]/[0.08] border border-[#FF4D00]/20">
-                    <card.icon className="w-5 h-5 text-[#FF4D00]" />
-                  </div>
-                  <div>
-                    <h3 className="text-[15px] md:text-[17px] font-display font-medium tracking-[-0.01em] text-[#111111] mb-2">
-                      {card.title}
-                    </h3>
-                    <p className="text-[14px] md:text-[15px] leading-[1.7] text-[#111111]/55 font-medium">
-                      {card.description}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Closing statement */}
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
+    <section ref={ref} className="bg-[#111111] border-b border-white/10">
+      {/* Header row */}
+      <div className="px-6 md:px-12 lg:px-20 pt-16 md:pt-24 pb-12 md:pb-16 border-b border-white/10">
+        <div className="w-full max-w-[1400px] mx-auto flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.7, ease: "easeOut" }}
-            className="mt-12 md:mt-16 text-[15px] md:text-[17px] leading-[1.7] text-[#111111]/50 font-medium max-w-2xl"
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            Each cohort is 10-100 XCitizens. Rolling departures. One year, six legs, four pillars: Ventures, Infrastructure, Capital, Community. A mobile university for civilizational prototyping — hosting events, convening conversations, pushing for policy, building ventures at every port.
+            <span className="text-[10px] font-mono font-bold tracking-[0.3em] uppercase text-[#FF4D00] mb-4 block">
+              The Format
+            </span>
+            <h2 className="text-[26px] sm:text-[34px] md:text-[42px] lg:text-[50px] leading-[1.1] font-display font-medium tracking-[-0.025em] text-white max-w-2xl">
+              Not a tour. Not a conference.<br />
+              A mobile university.
+            </h2>
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="text-[13px] md:text-[14px] leading-[1.75] text-white/40 font-medium max-w-xs md:max-w-sm md:text-right"
+          >
+            10–100 XCitizens per cohort. Rolling departures. One year, six legs, four pillars: Ventures, Infrastructure, Capital, Community.
           </motion.p>
-        </motion.div>
+        </div>
       </div>
+
+      {/* Numbered list */}
+      <div className="w-full max-w-[1400px] mx-auto">
+        {formatItems.map((item, i) => (
+          <motion.div
+            key={item.number}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.15 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+            className={`group px-6 md:px-12 lg:px-20 py-10 md:py-12 grid md:grid-cols-12 gap-6 md:gap-10 items-start hover:bg-white/[0.025] transition-colors ${
+              i < formatItems.length - 1 ? "border-b border-white/10" : ""
+            }`}
+          >
+            {/* Number */}
+            <div className="md:col-span-1 flex items-start pt-1">
+              <span className="text-[13px] font-mono font-bold tracking-[0.15em] text-[#FF4D00]">
+                {item.number}
+              </span>
+            </div>
+
+            {/* Icon + Title */}
+            <div className="md:col-span-4 flex items-start gap-4">
+              <div className="mt-0.5 w-9 h-9 shrink-0 flex items-center justify-center border border-white/10 group-hover:border-[#FF4D00]/40 transition-colors">
+                <item.icon className="w-4 h-4 text-white/40 group-hover:text-[#FF4D00] transition-colors" />
+              </div>
+              <h3 className="text-[20px] md:text-[24px] font-display font-medium tracking-[-0.02em] text-white leading-tight pt-0.5">
+                {item.title}
+              </h3>
+            </div>
+
+            {/* Description */}
+            <div className="md:col-span-7">
+              <p className="text-[14px] md:text-[15px] leading-[1.8] text-white/45 font-medium">
+                {item.description}
+              </p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Bottom tagline */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.7, delay: 0.7, ease: "easeOut" }}
+        className="px-6 md:px-12 lg:px-20 py-10 md:py-12 border-t border-white/10"
+      >
+        <p className="text-[10px] font-mono font-bold tracking-[0.25em] uppercase text-white/20 max-w-[1400px] mx-auto">
+          Hosting events · Convening conversations · Pushing for policy · Building ventures at every port
+        </p>
+      </motion.div>
     </section>
   );
 }
