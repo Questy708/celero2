@@ -1,0 +1,23 @@
+kind = "web"
+previewPath = "/"
+title = "xCelero Labs"
+version = "1.0.0"
+id = "artifacts/celero"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = ["/"]
+localPort = 19962
+
+[services.development]
+run = "bun run next dev -p 19962"
+
+[services.env]
+PORT = "19962"
+
+[services.production]
+build = ["bun", "run", "build"]

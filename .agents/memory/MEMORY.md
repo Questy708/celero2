@@ -1,0 +1,1 @@
+- [xCelero Import](xcelero-import.md) — Next.js+Bun app coexists with pnpm workspace; DATABASE_URL must not be set in .env
